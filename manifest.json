@@ -4,7 +4,9 @@
   "version": "1.0",
   "description": "Youtube Music Downloader. Download music file with tags and cover.",
   "permissions": [
+    "background",
     "declarativeContent",
+    "activeTab",
     "tabs",
     "*://music.youtube.com/"
   ],
@@ -12,10 +14,20 @@
     "scripts": [
       "background.js"
     ],
-    "persistent": false
+    "persistent": true
   },
   "page_action": {
     "default_title": "Download Current Music - Youtube Music DL",
     "default_popup": "popup.html"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://music.youtube.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ]
 }
