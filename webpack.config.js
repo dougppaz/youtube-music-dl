@@ -3,7 +3,6 @@ const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  devtool: 'source-map',
   entry: {
     background: './src/background.js',
     popup: './src/popup.js',
