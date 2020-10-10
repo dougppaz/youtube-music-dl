@@ -1,3 +1,18 @@
+import Vue from 'vue'
+import MusicDownload from './components/music-download'
+
 const background = chrome.extension.getBackgroundPage();
 
-console.log(background.videoId)
+(() => {
+  return new Vue({
+    el: '#app',
+    components: {
+      MusicDownload
+    },
+    data () {
+      return {
+        videoId: background.videoId
+      }
+    }
+  })
+})()
