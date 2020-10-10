@@ -4,7 +4,10 @@ const inputElem = document.getElementById(VIDEO_ID_INPUT_ID) || document.createE
 inputElem.id = VIDEO_ID_INPUT_ID
 inputElem.style.display = 'none'
 inputElem.addEventListener('change', (e) => {
-  chrome.runtime.sendMessage({ action: 'newVideoId', videoId: e.target.value })
+  chrome.runtime.sendMessage({
+    action: 'newVideoId',
+    videoId: e.target.value
+  })
 })
 document.body.appendChild(inputElem)
 

@@ -29,7 +29,10 @@ export default Vue.component(
     },
     methods: {
       download () {
-        alert('not available...')
+        chrome.runtime.sendMessage({
+          action: 'downloadYTMusic',
+          videoId: this.videoId
+        })
       }
     }
   }

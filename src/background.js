@@ -1,4 +1,4 @@
-window.videoId = null
+const videoIds = {}
 
 const onPageChangedAddRules = () => {
   chrome.declarativeContent.onPageChanged.addRules([
@@ -19,14 +19,20 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, onPageChangedAddRules)
 })
 
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message, sender) => {
   switch (message.action) {
     case 'newVideoId':
-      window.videoId = message.videoId
-      console.log('new video id', window.videoId)
+      console.log('new video id', message.videoId, 'from', sender.tab.id)
+      window.videoIds[sender.tab.id] = message.videoId
+      break
+
+    case 'downloadYTMusic':
+      console.log('download video id', message.videoId)
       break
 
     default:
       console.log('new message', message)
   }
 })
+
+window.videoIds = videoIds
