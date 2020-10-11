@@ -1,5 +1,6 @@
 import YTDL from 'ytdl-core'
 import BlobStream from 'blob-stream'
+import mime from 'mime-types'
 
 export default {
   async getVideoInfo (videoId) {
@@ -14,10 +15,10 @@ export default {
     const blob = BlobStream()
     download.pipe(blob)
     download.on('end', () => {
-      const format = YTDL.chooseFormat(ytInfo.formats, ytDownloadOpts) || { container: 'unknown' }
+      const format = YTDL.chooseFormat(ytInfo.formats, ytDownloadOpts)
       chrome.downloads.download({
         url: blob.toBlobURL(),
-        filename: `${ytInfo.videoDetails.title}.${format.container}`
+        filename: `${ytInfo.videoDetails.title}.${mime.extension(format.mimeType)}`
       })
     })
   }
