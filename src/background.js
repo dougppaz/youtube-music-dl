@@ -18,6 +18,18 @@ const onPageChangedAddRules = () => {
   ])
 }
 
+const requestVideoInfo = async (videoId) => {
+  if (videoInfos[videoId]) return
+  videoInfos[videoId] = {
+    _promise: utils.getVideoInfo(videoId)
+  }
+  videoInfos[videoId].result = await videoInfos[videoId]._promise
+  chrome.runtime.sendMessage({
+    action: 'videosInfosUpdated',
+    videoInfos
+  })
+}
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.declarativeContent.onPageChanged.removeRules(undefined, onPageChangedAddRules)
 })
@@ -31,19 +43,13 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
     case 'requestVideoInfo':
       console.log('request video info', message.videoId)
-      if (videoInfos[message.videoId]) break
-      videoInfos[message.videoId] = {
-        _promise: utils.getVideoInfo(message.videoId)
-      }
-      videoInfos[message.videoId].result = await videoInfos[message.videoId]._promise
-      chrome.runtime.sendMessage({
-        action: 'videosInfosUpdated',
-        videoInfos
-      })
+      await requestVideoInfo(message.videoId)
       break
 
     case 'downloadYTMusic':
-      console.log('download video id', message.videoId)
+      console.log('download video id', message.videoId, 'with itag', message.itag)
+      await requestVideoInfo(message.videoId)
+      utils.download(videoInfos[message.videoId].result.ytInfo, message.itag)
       break
 
     default:
