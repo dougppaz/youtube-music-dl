@@ -12,14 +12,18 @@ export default {
     console.log('downloading', ytInfo, 'with itag', itag)
     const ytDownloadOpts = { quality: itag }
     const download = YTDL.downloadFromInfo(ytInfo, ytDownloadOpts)
-    const blob = BlobStream()
-    download.pipe(blob)
-    download.on('end', () => {
+    const blobStream = BlobStream()
+    download.pipe(blobStream)
+    download.on('end', async () => {
       const format = YTDL.chooseFormat(ytInfo.formats, ytDownloadOpts)
+      const blob = await this.setTags(blobStream.toBlob(), { title: ytInfo.videoDetails.title })
       chrome.downloads.download({
-        url: blob.toBlobURL(),
+        url: URL.createObjectURL(blob),
         filename: `${ytInfo.videoDetails.title}.${mime.extension(format.mimeType)}`
       })
     })
+  },
+  async setTags (blob, tags) {
+    return blob
   }
 }
