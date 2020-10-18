@@ -1,6 +1,7 @@
 import YTDL from 'ytdl-core'
 import BlobStream from 'blob-stream'
 import mime from 'mime-types'
+import MP4 from './mp4'
 
 export default {
   async getVideoInfo (videoId) {
@@ -16,14 +17,30 @@ export default {
     download.pipe(blobStream)
     download.on('end', async () => {
       const format = YTDL.chooseFormat(ytInfo.formats, ytDownloadOpts)
-      const blob = await this.setTags(blobStream.toBlob(), { title: ytInfo.videoDetails.title })
+      const blob = await this.setBlobTags(
+        blobStream.toBlob(),
+        format.mimeType,
+        { title: ytInfo.videoDetails.title }
+      )
       chrome.downloads.download({
         url: URL.createObjectURL(blob),
         filename: `${ytInfo.videoDetails.title}.${mime.extension(format.mimeType)}`
       })
     })
   },
-  async setTags (blob, tags) {
-    return blob
+  async setBlobTags (blob, mimeType, tags) {
+    let fileBuffer
+    let mp4File
+    switch (mimeType) {
+      case 'audio/mp4; codecs="mp4a.40.2"':
+        fileBuffer = await blob.arrayBuffer()
+        mp4File = new MP4(fileBuffer)
+        mp4File.giveTags(tags)
+        return new Blob([mp4File.build().buffer], { type: mimeType })
+
+      default:
+        console.log(`not implemented setTags to '${mimeType}' mime type`)
+        return blob
+    }
   }
 }
