@@ -19,7 +19,7 @@ const onPageChangedAddRules = () => {
 }
 
 const requestVideoInfo = async (videoId) => {
-  if (videoInfos[videoId]) return
+  if (videoInfos[videoId]) return await videoInfos[videoId]._promise
   videoInfos[videoId] = {
     _promise: utils.getVideoInfo(videoId)
   }
