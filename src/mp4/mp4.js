@@ -82,13 +82,13 @@ export default class MP4 {
   getCommonTags () {
     const metadata = this.root.ensureChild('moov.udta.meta.ilst')
     const tags = {
-      title: getDataAtom('\xA9nam').getString(),
-      artist: getDataAtom('\xA9ART').getString(),
-      album: getDataAtom('\xA9alb').getString(),
-      genre: getDataAtom('\xA9gen').getString(),
+      title: getDataAtom(metadata, '\xA9nam').getString(),
+      artist: getDataAtom(metadata, '\xA9ART').getString(),
+      album: getDataAtom(metadata, '\xA9alb').getString(),
+      genre: getDataAtom(metadata, '\xA9gen').getString(),
       cover: null
     }
-    const cover = getDataAtom('covr')
+    const cover = getDataAtom(metadata, 'covr')
 
     if (cover) {
       const data = cover.getBytes()
