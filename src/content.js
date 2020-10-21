@@ -16,7 +16,7 @@ const bindInputElem = (elemId, action) => {
 
 (() => {
   bindInputElem(VIDEO_ID_INPUT_ID, 'newVideoId')
-  bindInputElem(YTMUSIC_APP_STATE_INPUT_ID, 'ytMusicAppState')
+  bindInputElem(YTMUSIC_APP_STATE_INPUT_ID, 'newYtMusicAppState')
 
   const scriptElem = document.createElement('script')
   scriptElem.innerText = `

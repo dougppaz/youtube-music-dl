@@ -27,7 +27,7 @@ const requestVideoInfo = async (videoId) => {
   }
   videoInfos[videoId].result = await videoInfos[videoId]._promise
   chrome.runtime.sendMessage({
-    action: 'videosInfosUpdated',
+    action: 'videoInfosUpdated',
     videoInfos
   })
 }
@@ -53,13 +53,17 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
       await requestVideoInfo(message.videoId)
       utils.download(videoInfos[message.videoId].result.ytInfo, message.itag)
       break
-    case 'ytMusicAppState':
+    case 'newYtMusicAppState':
       state = JSON.parse(message.value)
       videoId = get(state, 'player.playerResponse.videoDetails.videoId')
       if (!videoId) return console.log('new yt music app state without videoId')
       console.log('new yt music app state for', videoId)
       if (!videoStates[sender.tab.id]) videoStates[sender.tab.id] = {}
       videoStates[sender.tab.id][videoId] = state
+      chrome.runtime.sendMessage({
+        action: 'videoStatesUpdated',
+        videoStates
+      })
       break
     default:
       console.log('new message', message)

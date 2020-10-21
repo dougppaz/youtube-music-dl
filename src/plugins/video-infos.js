@@ -4,13 +4,13 @@ export default {
 
     chrome.runtime.onMessage.addListener(async (message) => {
       switch (message.action) {
-        case 'videosInfosUpdated':
+        case 'videoInfosUpdated':
           console.log('video infos updated')
           Vue.set(Vue.prototype.$videoInfos, 'infos', message.videoInfos)
           break
 
         default:
-          console.log('new message', message)
+          console.log('[video-infos plugin] new message', message)
       }
     })
   }
