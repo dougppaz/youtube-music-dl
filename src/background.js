@@ -3,7 +3,7 @@ import utils from './utils'
 
 const videoIds = {}
 const videoInfos = {}
-const videoIdStates = {}
+const videoStates = {}
 
 const onPageChangedAddRules = () => {
   chrome.declarativeContent.onPageChanged.addRules([
@@ -37,6 +37,8 @@ chrome.runtime.onInstalled.addListener(() => {
 })
 
 chrome.runtime.onMessage.addListener(async (message, sender) => {
+  let state
+  let videoId
   switch (message.action) {
     case 'newVideoId':
       console.log('new video id', message.videoId, 'from', sender.tab.id)
@@ -52,13 +54,12 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
       utils.download(videoInfos[message.videoId].result.ytInfo, message.itag)
       break
     case 'ytMusicAppState':
-      const state = JSON.parse(message.value)
-      const videoId = get(state, 'player.playerResponse.videoDetails.videoId')
+      state = JSON.parse(message.value)
+      videoId = get(state, 'player.playerResponse.videoDetails.videoId')
       if (!videoId) return console.log('new yt music app state without videoId')
       console.log('new yt music app state for', videoId)
-      if (!videoIdStates[sender.tab.id]) videoIdStates[sender.tab.id] = {}
-      videoIdStates[sender.tab.id][videoId] = state
-      console.log(videoIdStates)
+      if (!videoStates[sender.tab.id]) videoStates[sender.tab.id] = {}
+      videoStates[sender.tab.id][videoId] = state
       break
     default:
       console.log('new message', message)
@@ -67,4 +68,4 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
 window.videoIds = videoIds
 window.videoInfos = videoInfos
-window.videoIdStates = videoIdStates
+window.videoStates = videoStates
