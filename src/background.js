@@ -1,7 +1,9 @@
+import { get } from 'lodash-es'
 import utils from './utils'
 
 const videoIds = {}
 const videoInfos = {}
+const videoIdStates = {}
 
 const onPageChangedAddRules = () => {
   chrome.declarativeContent.onPageChanged.addRules([
@@ -38,20 +40,26 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
   switch (message.action) {
     case 'newVideoId':
       console.log('new video id', message.videoId, 'from', sender.tab.id)
-      window.videoIds[sender.tab.id] = message.value
+      videoIds[sender.tab.id] = message.value
       break
-
     case 'requestVideoInfo':
       console.log('request video info', message.videoId)
       await requestVideoInfo(message.videoId)
       break
-
     case 'downloadYTMusic':
       console.log('download video id', message.videoId, 'with itag', message.itag)
       await requestVideoInfo(message.videoId)
       utils.download(videoInfos[message.videoId].result.ytInfo, message.itag)
       break
-
+    case 'ytMusicAppState':
+      const state = JSON.parse(message.value)
+      const videoId = get(state, 'player.playerResponse.videoDetails.videoId')
+      if (!videoId) return console.log('new yt music app state without videoId')
+      console.log('new yt music app state for', videoId)
+      if (!videoIdStates[sender.tab.id]) videoIdStates[sender.tab.id] = {}
+      videoIdStates[sender.tab.id][videoId] = state
+      console.log(videoIdStates)
+      break
     default:
       console.log('new message', message)
   }
@@ -59,3 +67,4 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
 window.videoIds = videoIds
 window.videoInfos = videoInfos
+window.videoIdStates = videoIdStates
