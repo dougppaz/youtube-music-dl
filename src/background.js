@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
   switch (message.action) {
     case 'newVideoId':
       console.log('new video id', message.videoId, 'from', sender.tab.id)
-      window.videoIds[sender.tab.id] = message.videoId
+      window.videoIds[sender.tab.id] = message.value
       break
 
     case 'requestVideoInfo':
