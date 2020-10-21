@@ -1,6 +1,7 @@
 import YTDL from 'ytdl-core'
 import BlobStream from 'blob-stream'
 import mime from 'mime-types'
+import { get } from 'lodash'
 import MP4 from './mp4'
 
 export default {
@@ -37,10 +38,32 @@ export default {
         mp4File = new MP4(fileBuffer)
         mp4File.giveTags(tags)
         return new Blob([mp4File.build().buffer], { type: mimeType })
-
       default:
         console.log(`not implemented setTags to '${mimeType}' mime type`)
         return blob
+    }
+  },
+  getFilterFnByPageType (pageType) {
+    return item => (pageType === get(item, 'navigationEndpoint.browseEndpoint.browseEndpointContextSupportedConfigs.browseEndpointContextMusicConfig.pageType'))
+  },
+  getMusicInfoFromYTMusicAppState (state) {
+    const firstItem = state.queue.items[0].playlistPanelVideoRenderer
+
+    return {
+      title: firstItem.title.runs
+        .map(({ text }) => (text))
+        .join(' '),
+      artist: firstItem.longBylineText.runs
+        .filter(this.getFilterFnByPageType('MUSIC_PAGE_TYPE_ARTIST'))
+        .map(({ text }) => (text))
+        .join(', '),
+      album: firstItem.longBylineText.runs
+        .filter(this.getFilterFnByPageType('MUSIC_PAGE_TYPE_ALBUM'))
+        .map(({ text }) => (text))
+        .join(' - '),
+      track: null,
+      genre: null,
+      coverUrl: firstItem.thumbnail.thumbnails.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
     }
   }
 }
