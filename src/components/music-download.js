@@ -55,7 +55,8 @@ export default Vue.component(
         chrome.runtime.sendMessage({
           action: 'downloadYTMusic',
           videoId: this.videoId,
-          itag: this.itag
+          itag: this.itag,
+          tabId: this.$videoInfos.tab.id
         })
       }
     }
