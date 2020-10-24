@@ -68,6 +68,7 @@ export default {
         .join(' - '),
       track: null,
       genre: null,
+      year: parseInt(firstItem.longBylineText.runs[firstItem.longBylineText.runs.length - 1].text),
       coverUrl: firstItem.thumbnail.thumbnails.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
     }
   }
