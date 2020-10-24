@@ -36,13 +36,15 @@ chrome.runtime.onInstalled.addListener(() => {
 })
 
 chrome.runtime.onMessage.addListener(async (message, sender) => {
+  let tabId
   let state
   let videoId
   let videoInfo
   switch (message.action) {
     case 'requestVideoInfo':
-      console.log('request video info', message.videoId)
-      await getVideoInfo(sender.tab.id, message.videoId)
+      tabId = (sender.tab && sender.tab.id) || message.tabId
+      console.log(tabId, 'request video info', message.videoId)
+      await getVideoInfo(tabId, message.videoId)
       break
     case 'downloadYTMusic':
       console.log('download video id', message.videoId, 'with itag', message.itag)
