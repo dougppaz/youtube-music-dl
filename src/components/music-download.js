@@ -42,8 +42,8 @@ export default Vue.component(
         return `https://youtu.be/${this.videoId}`
       },
       formats () {
-        if (!this.videoInfo.ytInfo) return []
-        return this.videoInfo.ytInfo.formats
+        if (!this.videoInfo.ytVideoInfo) return []
+        return this.videoInfo.ytVideoInfo.formats
           .filter(({ hasAudio, hasVideo }) => (hasAudio && !hasVideo))
           .sort((a, b) => {
             return b.audioBitrate - a.audioBitrate

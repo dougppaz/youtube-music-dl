@@ -8,14 +8,15 @@ export default Vue.component(
     },
     computed: {
       videoInfo () {
-        if (!this.$videoInfos.infos[this.videoId]) return {}
-        return this.$videoInfos.infos[this.videoId].result || {}
+        if (!this.$videoInfos.current[this.videoId]) return {}
+        return this.$videoInfos.current[this.videoId]
       }
     },
     methods: {
       requestVideoInfo () {
         chrome.runtime.sendMessage({
           action: 'requestVideoInfo',
+          tabId: this.$videoInfos.tab.id,
           videoId: this.videoId
         })
       }

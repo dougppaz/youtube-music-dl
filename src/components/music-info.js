@@ -8,9 +8,9 @@ export default Vue.component(
     extends: HasVideoInfo,
     template: `
       <div>
-        <div v-if="musicInfo">
-          <p>{{ musicInfo.title }}</p>
-          <p>by <strong>{{ musicInfo.artist }}</strong></p>
+        <div v-if="musicTags">
+          <p>{{ musicTags.title }}</p>
+          <p>by <strong>{{ musicTags.artist }}</strong></p>
         </div>
         <div v-else>
           <p>Loading music info...</p>
@@ -24,8 +24,9 @@ export default Vue.component(
       }
     },
     computed: {
-      musicInfo () {
-        return utils.getMusicTagsFromYTMusicAppState(this.$videoStates.states[this.videoId])
+      musicTags () {
+        if (!this.videoInfo) return {}
+        return this.videoInfo.tags || {}
       }
     }
   }
