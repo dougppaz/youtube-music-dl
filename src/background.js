@@ -1,9 +1,8 @@
-import { get } from 'lodash-es'
+import { get, set } from 'lodash-es'
 import utils from './utils'
 
 const videoIds = {}
 const videoInfos = {}
-const videoStates = {}
 
 const onPageChangedAddRules = () => {
   chrome.declarativeContent.onPageChanged.addRules([
@@ -20,16 +19,16 @@ const onPageChangedAddRules = () => {
   ])
 }
 
-const requestVideoInfo = async (videoId) => {
-  if (videoInfos[videoId]) return await videoInfos[videoId]._promise
-  videoInfos[videoId] = {
-    _promise: utils.getVideoInfo(videoId)
-  }
-  videoInfos[videoId].result = await videoInfos[videoId]._promise
+const getVideoInfo = async (tabId, videoId) => {
+  const videoInfoPath = `${tabId}.${videoId}`
+  const getYTVideoInfoPromisePath = `${videoInfoPath}._promises.getYTVideoInfo`
+  if (!get(videoInfos, getYTVideoInfoPromisePath)) set(videoInfos, getYTVideoInfoPromisePath, utils.getYTVideoInfo(videoId))
+  set(videoInfos, `${videoInfoPath}.ytVideoInfo`, await get(videoInfos, getYTVideoInfoPromisePath))
   chrome.runtime.sendMessage({
     action: 'videoInfosUpdated',
     videoInfos
   })
+  return get(videoInfos, videoInfoPath)
 }
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -39,31 +38,32 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onMessage.addListener(async (message, sender) => {
   let state
   let videoId
+  let videoInfo
   switch (message.action) {
-    case 'newVideoId':
-      console.log('new video id', message.videoId, 'from', sender.tab.id)
-      videoIds[sender.tab.id] = message.value
-      break
     case 'requestVideoInfo':
       console.log('request video info', message.videoId)
-      await requestVideoInfo(message.videoId)
+      await getVideoInfo(sender.tab.id, message.videoId)
       break
     case 'downloadYTMusic':
       console.log('download video id', message.videoId, 'with itag', message.itag)
-      await requestVideoInfo(message.videoId)
-      utils.download(videoInfos[message.videoId].result.ytInfo, message.itag)
+      videoInfo = await getVideoInfo(sender.tab.id, message.videoId)
+      utils.download(videoInfo, message.itag)
       break
     case 'newYtMusicAppState':
       state = JSON.parse(message.value)
       videoId = get(state, 'player.playerResponse.videoDetails.videoId')
       if (!videoId) return console.log('new yt music app state without videoId')
       console.log('new yt music app state for', videoId)
-      if (!videoStates[sender.tab.id]) videoStates[sender.tab.id] = {}
-      videoStates[sender.tab.id][videoId] = state
+      if (videoId !== videoIds[sender.tab.id]) {
+        console.log('new video id', videoId, 'setted to', sender.tab.id)
+        videoIds[sender.tab.id] = videoId
+      }
+      set(videoInfos, `${sender.tab.id}.${videoId}.tags`, utils.getMusicTagsFromYTMusicAppState(state))
       chrome.runtime.sendMessage({
-        action: 'videoStatesUpdated',
-        videoStates
+        action: 'videoInfosUpdated',
+        videoInfos
       })
+      await getVideoInfo(sender.tab.id, videoId)
       break
     default:
       console.log('new message', message)
@@ -72,4 +72,3 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
 window.videoIds = videoIds
 window.videoInfos = videoInfos
-window.videoStates = videoStates

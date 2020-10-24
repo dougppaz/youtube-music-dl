@@ -25,7 +25,7 @@ export default Vue.component(
     },
     computed: {
       musicInfo () {
-        return utils.getMusicInfoFromYTMusicAppState(this.$videoStates.states[this.videoId])
+        return utils.getMusicTagsFromYTMusicAppState(this.$videoStates.states[this.videoId])
       }
     }
   }

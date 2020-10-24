@@ -1,4 +1,3 @@
-const VIDEO_ID_INPUT_ID = 'ytm-dl-video-id'
 const YTMUSIC_APP_STATE_INPUT_ID = 'ytm-dl-ytmusic-app-state'
 
 const bindInputElem = (elemId, action) => {
@@ -15,7 +14,6 @@ const bindInputElem = (elemId, action) => {
 }
 
 (() => {
-  bindInputElem(VIDEO_ID_INPUT_ID, 'newVideoId')
   bindInputElem(YTMUSIC_APP_STATE_INPUT_ID, 'newYtMusicAppState')
 
   const scriptElem = document.createElement('script')
@@ -35,14 +33,6 @@ const bindInputElem = (elemId, action) => {
         }
       }, 1000);
     }
-
-    youtubeMusicDLWatch(
-      '${VIDEO_ID_INPUT_ID}',
-      function () {
-        var playerResponse_ = document.querySelector('ytmusic-app').$['player-page'].$.player.playerResponse_;
-        return (playerResponse_ && playerResponse_.videoDetails && playerResponse_.videoDetails.videoId) || null;
-      }
-    );
 
     youtubeMusicDLWatch(
       '${YTMUSIC_APP_STATE_INPUT_ID}',

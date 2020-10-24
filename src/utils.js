@@ -5,27 +5,28 @@ import { get } from 'lodash'
 import MP4 from './mp4'
 
 export default {
-  async getVideoInfo (videoId) {
+  async getYTVideoInfo (videoId) {
+    // TODO: add cache
     console.log('getting video info', videoId)
-    const ytInfo = await YTDL.getInfo(videoId)
-    return { ytInfo }
+    return await YTDL.getInfo(videoId)
   },
-  async download (ytInfo, itag) {
-    console.log('downloading', ytInfo, 'with itag', itag)
+  async download (videoInfo, itag) {
+    const { ytVideoInfo, tags } = videoInfo
+    console.log('downloading', ytVideoInfo, 'with itag', itag)
     const ytDownloadOpts = { quality: itag }
-    const download = YTDL.downloadFromInfo(ytInfo, ytDownloadOpts)
+    const download = YTDL.downloadFromInfo(ytVideoInfo, ytDownloadOpts)
     const blobStream = BlobStream()
     download.pipe(blobStream)
     download.on('end', async () => {
-      const format = YTDL.chooseFormat(ytInfo.formats, ytDownloadOpts)
+      const format = YTDL.chooseFormat(ytVideoInfo.formats, ytDownloadOpts)
       const blob = await this.setBlobTags(
         blobStream.toBlob(),
         format.mimeType,
-        { title: ytInfo.videoDetails.title }
+        tags
       )
       chrome.downloads.download({
         url: URL.createObjectURL(blob),
-        filename: `${ytInfo.videoDetails.title}.${mime.extension(format.mimeType)}`
+        filename: `${ytVideoInfo.videoDetails.title}.${mime.extension(format.mimeType)}`
       })
     })
   },
@@ -46,7 +47,7 @@ export default {
   getFilterFnByPageType (pageType) {
     return item => (pageType === get(item, 'navigationEndpoint.browseEndpoint.browseEndpointContextSupportedConfigs.browseEndpointContextMusicConfig.pageType'))
   },
-  getMusicInfoFromYTMusicAppState (state) {
+  getMusicTagsFromYTMusicAppState (state) {
     const selectedItem = state.queue.items.filter(({ playlistPanelVideoRenderer: { selected } }) => (selected))
 
     if (selectedItem.length === 0) return null

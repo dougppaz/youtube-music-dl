@@ -5,10 +5,10 @@ import YTMusicAppStateMock2 from './test_mocks/ytmusic-app-state-2.json'
 import YTMusicAppStateMock3 from './test_mocks/ytmusic-app-state-3.json'
 
 describe('utils', () => {
-  describe('#getMusicInfoFromYTMusicAppState()', () => {
+  describe('#getMusicTagsFromYTMusicAppState()', () => {
     it('Mock 1', () => {
       assert.deepStrictEqual(
-        utils.getMusicInfoFromYTMusicAppState(YTMusicAppStateMock1),
+        utils.getMusicTagsFromYTMusicAppState(YTMusicAppStateMock1),
         {
           title: 'Oasis (Ao Vivo no Estúdio MangoLab)',
           artist: 'Potyguara Bardo, MangoLab',
@@ -22,7 +22,7 @@ describe('utils', () => {
 
     it('Mock 2', () => {
       assert.deepStrictEqual(
-        utils.getMusicInfoFromYTMusicAppState(YTMusicAppStateMock2),
+        utils.getMusicTagsFromYTMusicAppState(YTMusicAppStateMock2),
         {
           title: 'AmarElo (Sample: Sujeito de Sorte - Belchior) (part. Majur e Pabllo Vittar)',
           artist: 'Emicida',
@@ -36,7 +36,7 @@ describe('utils', () => {
 
     it('Mock 3', () => {
       assert.deepStrictEqual(
-        utils.getMusicInfoFromYTMusicAppState(YTMusicAppStateMock3),
+        utils.getMusicTagsFromYTMusicAppState(YTMusicAppStateMock3),
         {
           title: 'Meu Jeito de Amar',
           artist: 'Omulu, Lux & Tróia, DUDA BEAT',
