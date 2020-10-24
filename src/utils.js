@@ -47,7 +47,11 @@ export default {
     return item => (pageType === get(item, 'navigationEndpoint.browseEndpoint.browseEndpointContextSupportedConfigs.browseEndpointContextMusicConfig.pageType'))
   },
   getMusicInfoFromYTMusicAppState (state) {
-    const firstItem = state.queue.items[0].playlistPanelVideoRenderer
+    const selectedItem = state.queue.items.filter(({ playlistPanelVideoRenderer: { selected } }) => (selected))
+
+    if (selectedItem.length === 0) return null
+
+    const firstItem = selectedItem[0].playlistPanelVideoRenderer
 
     return {
       title: firstItem.title.runs
