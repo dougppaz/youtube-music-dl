@@ -7,7 +7,8 @@ import {
   recursiveBuilder,
   addDataAtom,
   concatBuffers,
-  getDataAtom
+  getDataAtom,
+  ascii
 } from './utils'
 
 const BASE64_MARKER = ';base64,'
@@ -38,15 +39,15 @@ export default class MP4 {
     const metadata = this.root.ensureChild('moov.udta.meta.ilst')
     metadata.parent.padding = 4
 
-    if (tags.track) addDataAtom(metadata, 'trkn', tags.track)
+    if (tags.track) addDataAtom(metadata, 'trkn', ascii(tags.track))
 
-    if (tags.title) addDataAtom(metadata, '\xA9nam', tags.title)
+    if (tags.title) addDataAtom(metadata, '\xA9nam', ascii(tags.title))
 
-    if (tags.artist) addDataAtom(metadata, '\xA9ART', tags.artist)
+    if (tags.artist) addDataAtom(metadata, '\xA9ART', ascii(tags.artist))
 
-    if (tags.album) addDataAtom(metadata, '\xA9alb', tags.album)
+    if (tags.album) addDataAtom(metadata, '\xA9alb', ascii(tags.album))
 
-    if (tags.genre) addDataAtom(metadata, '\xA9gen', tags.genre)
+    if (tags.genre) addDataAtom(metadata, '\xA9gen', ascii(tags.genre))
 
     if (tags.year) addDataAtom(metadata, '\xA9day', tags.year.toString())
 

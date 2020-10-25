@@ -89,11 +89,14 @@ const getDataAtom = (metadata, name) => {
   return data
 }
 
+const ascii = s => (unescape(encodeURIComponent(s)))
+
 export {
   recursiveParse,
   jDataViewToUint,
   concatBuffers,
   recursiveBuilder,
   addDataAtom,
-  getDataAtom
+  getDataAtom,
+  ascii
 }
