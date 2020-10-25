@@ -105,7 +105,7 @@ export default class MP4 {
         index += CHUNK_SIZE
       }
 
-      tags.cover = 'data:image/gif;base64,' + btoa(result)
+      tags.cover = 'data:image/jpeg;base64,' + btoa(result)
     }
 
     return tags

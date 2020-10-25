@@ -2,6 +2,8 @@ import YTDL from 'ytdl-core'
 import BlobStream from 'blob-stream'
 import mime from 'mime-types'
 import { get } from 'lodash'
+import axios from 'axios'
+import { Buffer } from 'buffer'
 import MP4 from './mp4'
 
 export default {
@@ -33,6 +35,9 @@ export default {
   async setBlobTags (blob, mimeType, tags) {
     let fileBuffer
     let mp4File
+    if (tags.coverUrl && !tags.cover) {
+      tags.cover = await this.getCoverBase64FromUrl(tags.coverUrl)
+    }
     switch (mimeType) {
       case 'audio/mp4; codecs="mp4a.40.2"':
         fileBuffer = await blob.arrayBuffer()
@@ -71,5 +76,13 @@ export default {
       year: parseInt(firstItem.longBylineText.runs[firstItem.longBylineText.runs.length - 1].text),
       coverUrl: firstItem.thumbnail.thumbnails.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
     }
+  },
+  async getCoverBase64FromUrl (url) {
+    const response = await axios({
+      url,
+      responseType: 'arraybuffer'
+    })
+    const b64 = Buffer.from(response.data, 'binary').toString('base64')
+    return `data:${response.headers['content-type'].toLowerCase()};base64,${b64}`
   }
 }
