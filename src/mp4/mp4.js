@@ -48,6 +48,8 @@ export default class MP4 {
 
     if (tags.genre) addDataAtom(metadata, '\xA9gen', tags.genre)
 
+    if (tags.year) addDataAtom(metadata, '\xA9day', tags.year.toString())
+
     if (tags.cover) {
       const cover = addDataAtom(metadata, 'covr')
       const base64Index = tags.cover.indexOf(BASE64_MARKER) + BASE64_MARKER.length
