@@ -17,4 +17,4 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           filename: youtube-music-dl.zip
-          path: dist
+          directory: ./dist/
