@@ -1,7 +1,8 @@
 name: Continuous Integration
 on:
-  tags:
-    - v*
+  release:
+    types:
+      - created
 jobs:
   build:
     runs-on: ubuntu-latest
