@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: 12.19
       - run: npm install
-      - run: npm build
+      - run: npm run build
       - name: Release
         uses: thedoctor0/zip-release@master
         with:
