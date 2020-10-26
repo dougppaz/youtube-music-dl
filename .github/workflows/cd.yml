@@ -35,6 +35,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./youtube-music-dl.zip
+          asset_path: ./dist/youtube-music-dl.zip
           asset_name: youtube-music-dl.zip
           asset_content_type: application/zip
