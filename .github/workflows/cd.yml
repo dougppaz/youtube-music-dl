@@ -1,0 +1,19 @@
+name: Continuous Integration
+on:
+  tags:
+    - v*
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.19
+      - run: npm install
+      - run: npm build
+      - name: Release
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: youtube-music-dl.zip
+          path: dist
