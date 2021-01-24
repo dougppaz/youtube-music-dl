@@ -1,6 +1,6 @@
 {
   "name": "youtube-music-dl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Youtube Music DL - Youtube Music Downloader. Download music file with tags and cover.",
   "main": "webpack.config.js",
   "scripts": {
