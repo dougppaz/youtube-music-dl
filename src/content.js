@@ -1,4 +1,7 @@
-const YTMUSIC_APP_STATE_INPUT_ID = 'ytm-dl-ytmusic-app-state'
+import downloadSvg from './imgs/download.svg'
+
+const YTM_DL_APP_STATE_INPUT_ID = 'ytm-dl-ytmusic-app-state'
+const YTM_DL_DOWNLOAD_BUTTON_ID = 'ytm-dl-download-button'
 
 const bindInputElem = (elemId, action) => {
   const inputElem = document.getElementById(elemId) || document.createElement('input')
@@ -14,10 +17,22 @@ const bindInputElem = (elemId, action) => {
 }
 
 (() => {
-  bindInputElem(YTMUSIC_APP_STATE_INPUT_ID, 'newYtMusicAppState')
+  bindInputElem(YTM_DL_APP_STATE_INPUT_ID, 'newYtMusicAppState')
+
+  const downloadButtonElem = document.getElementById(YTM_DL_DOWNLOAD_BUTTON_ID) || document.createElement('button')
+  downloadButtonElem.id = YTM_DL_DOWNLOAD_BUTTON_ID
+  downloadButtonElem.style.display = 'none'
+  downloadButtonElem.addEventListener('click', () => {
+    chrome.runtime.sendMessage({
+      action: 'downloadFromPlayerButton',
+      state: document.getElementById(YTM_DL_APP_STATE_INPUT_ID).value
+    })
+  })
+  document.body.appendChild(downloadButtonElem)
 
   const scriptElem = document.createElement('script')
-  scriptElem.innerText = `
+  scriptElem.setAttribute('type', 'text/javascript')
+  scriptElem.innerHTML = `
     function youtubeMusicDLWatch (elemId, getValueFn) {
       var inputElem = document.getElementById(elemId);
       var currentValue = null;
@@ -34,12 +49,35 @@ const bindInputElem = (elemId, action) => {
       }, 1000);
     }
 
+    function createDownloadBtn () {
+      const elem = document.createElement('tp-yt-paper-icon-button');
+      setTimeout(function () {
+        elem.$.icon.innerHTML = \`
+          ${downloadSvg}
+        \`
+      }, 500);
+      elem.onclick = function () {
+        var downloadButtonElem = document.getElementById('${YTM_DL_DOWNLOAD_BUTTON_ID}');
+        downloadButtonElem.click();
+      }
+      return elem;
+    }
+
+    function insertDownloadBtn () {
+      const expandBtn = document.querySelector('tp-yt-paper-icon-button.expand-button.ytmusic-player-bar');
+      const downloadBtn = createDownloadBtn();
+      downloadBtn.classList.add('ytmusic-player-bar');
+      expandBtn.parentElement.insertBefore(downloadBtn, expandBtn);
+    }
+
     youtubeMusicDLWatch(
-      '${YTMUSIC_APP_STATE_INPUT_ID}',
+      '${YTM_DL_APP_STATE_INPUT_ID}',
       function () {
-        return JSON.stringify(document.querySelector('ytmusic-app').getState())
+        return JSON.stringify(document.querySelector('ytmusic-app').getState());
       }
     );
+
+    insertDownloadBtn();
   `
   document.body.appendChild(scriptElem)
 })()

@@ -6,16 +6,19 @@ import axios from 'axios'
 import { Buffer } from 'buffer'
 import MP4 from './mp4'
 
+const DEFAULT_ITAG = 140
+
 export default {
   async getYTVideoInfo (videoId) {
     // TODO: add cache
     console.log('getting video info', videoId)
     return await YTDL.getInfo(videoId)
   },
-  async download (videoInfo, itag) {
+  async download (videoInfo, itag_) {
     const { ytVideoInfo, tags } = videoInfo
-    console.log('downloading', ytVideoInfo, 'with itag', itag)
-    const ytDownloadOpts = { quality: itag }
+    const iTag = itag_ || DEFAULT_ITAG
+    console.log('downloading', ytVideoInfo, 'with itag', iTag)
+    const ytDownloadOpts = { quality: iTag }
     const download = YTDL.downloadFromInfo(ytVideoInfo, ytDownloadOpts)
     const blobStream = BlobStream()
     download.pipe(blobStream)
