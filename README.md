@@ -21,9 +21,13 @@ Youtube Music Downloader. Chrome Extension to download music file with tags and 
 
 ![Play a music in Youtube Music](docs/images/use_ce_1.png)
 
-### Open Youtube Music DL Extension popup, choose a format and click on Download button.
+### Click on Download button
 
-![Open Youtube Music DL Extension popup, choose a format and click on Download button.](docs/images/use_ce_2.png)
+![Click on Download button](docs/images/use_ce_2_1.png)
+
+#### or open Youtube Music DL Extension popup, to choose a format
+
+![Open Youtube Music DL Extension popup, to choose a format](docs/images/use_ce_2_2.png)
 
 ### Done
 
