@@ -69,6 +69,14 @@ module.exports = [
     entry: {
       content: './src/content.js'
     },
+    module: {
+      rules: [
+        {
+          test: /\.svg$/i,
+          use: 'raw-loader',
+        },
+      ]
+    },
     ...common
   }
 ]
