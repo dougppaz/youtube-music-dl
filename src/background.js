@@ -36,7 +36,7 @@ chrome.runtime.onInstalled.addListener(() => {
 })
 
 chrome.runtime.onMessage.addListener(async (message, sender) => {
-  let tabId = (sender.tab && sender.tab.id) || message.tabId
+  const tabId = (sender.tab && sender.tab.id) || message.tabId
   let state
   let videoId
   let videoInfo
