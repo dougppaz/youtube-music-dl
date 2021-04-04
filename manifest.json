@@ -11,7 +11,8 @@
     "downloads",
     "*://music.youtube.com/",
     "*://www.youtube.com/",
-    "*://*.googlevideo.com/"
+    "*://*.googlevideo.com/",
+    "*://i.ytimg.com/"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "background": {
