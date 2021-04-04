@@ -4,6 +4,7 @@ import mime from 'mime-types'
 import { get } from 'lodash'
 import axios from 'axios'
 import { Buffer } from 'buffer'
+import filenamify from 'filenamify'
 import MP4 from './mp4'
 
 const DEFAULT_ITAG = 140
@@ -31,7 +32,7 @@ export default {
       )
       chrome.downloads.download({
         url: URL.createObjectURL(blob),
-        filename: `${ytVideoInfo.videoDetails.title}.${mime.extension(format.mimeType)}`
+        filename: `${filenamify(ytVideoInfo.videoDetails.title)}.${mime.extension(format.mimeType)}`
       })
     })
   },
