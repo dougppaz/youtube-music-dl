@@ -30,11 +30,13 @@ export default {
         format.mimeType,
         tags
       )
-      chrome.downloads.download({
-        url: URL.createObjectURL(blob),
-        filename: `${filenamify(ytVideoInfo.videoDetails.title)}.${mime.extension(format.mimeType)}`
-      })
-    })
+      const filename = `${filenamify(ytVideoInfo.videoDetails.title)}.${mime.extension(format.mimeType)}`;
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = URL.createObjectURL(blob, { type: 'text/plain;charset=UTF-8' });
+      link.dispatchEvent(new MouseEvent('click'));
+      URL.revokeObjectURL(link.href);
+    });
   },
   async setBlobTags (blob, mimeType, tags) {
     let fileBuffer
