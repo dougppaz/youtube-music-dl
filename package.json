@@ -53,6 +53,7 @@
     "filenamify": "^4.2.0",
     "https-browserify": "^1.0.0",
     "jDataView": "^2.3.0",
+    "jdataview": "github:jDataView/jDataView",
     "lodash-es": "^4.17.20",
     "mime-types": "^2.1.28",
     "path-browserify": "^1.0.1",
