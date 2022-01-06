@@ -51,7 +51,7 @@ module.exports = [
     },
     resolve: {
       alias: {
-        'vue$': 'vue/dist/vue.esm.js'
+        vue$: 'vue/dist/vue.esm.js'
       }
     },
     plugins: [
@@ -73,8 +73,8 @@ module.exports = [
       rules: [
         {
           test: /\.svg$/i,
-          use: 'raw-loader',
-        },
+          use: 'raw-loader'
+        }
       ]
     },
     ...common
