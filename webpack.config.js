@@ -6,7 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const common = {
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    hashFunction: 'xxhash64'
   }
 }
 
@@ -51,7 +52,7 @@ module.exports = [
     },
     resolve: {
       alias: {
-        'vue$': 'vue/dist/vue.esm.js'
+        vue$: 'vue/dist/vue.esm.js'
       }
     },
     plugins: [
@@ -73,8 +74,8 @@ module.exports = [
       rules: [
         {
           test: /\.svg$/i,
-          use: 'raw-loader',
-        },
+          use: 'raw-loader'
+        }
       ]
     },
     ...common

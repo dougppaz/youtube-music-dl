@@ -8,6 +8,10 @@ import filenamify from 'filenamify'
 import MP4 from './mp4'
 
 const DEFAULT_ITAG = 140
+const RENDERER_PROPERTY = 'playlistPanelVideoRenderer'
+const WRAPPER_PROPERTY = 'playlistPanelVideoWrapperRenderer'
+const COUNTERPART_PROPERTY = 'counterpart'
+const COUNTERPART_RENDERER_PROPERTY = 'counterpartRenderer'
 
 export default {
   async getYTVideoInfo (videoId) {
@@ -57,7 +61,26 @@ export default {
     return item => (pageType === get(item, 'navigationEndpoint.browseEndpoint.browseEndpointContextSupportedConfigs.browseEndpointContextMusicConfig.pageType'))
   },
   getMusicTagsFromYTMusicAppState (state) {
-    const selectedItem = state.queue.items.filter(({ playlistPanelVideoRenderer: { selected } }) => (selected))
+    const items = []
+
+    for (const item of state.queue.items) {
+      if (RENDERER_PROPERTY in item) {
+        items.push(item)
+      } else if (WRAPPER_PROPERTY in item) {
+        const wrapper = item[WRAPPER_PROPERTY]
+
+        if (COUNTERPART_PROPERTY in wrapper) {
+          for (const renderer of wrapper[COUNTERPART_PROPERTY]) {
+            if (COUNTERPART_RENDERER_PROPERTY in renderer &&
+                RENDERER_PROPERTY in renderer[COUNTERPART_RENDERER_PROPERTY]) {
+              items.push(renderer[COUNTERPART_RENDERER_PROPERTY])
+            }
+          }
+        }
+      }
+    }
+
+    const selectedItem = items.filter(({ [RENDERER_PROPERTY]: { selected } }) => (selected))
 
     if (selectedItem.length === 0) return null
 
