@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename)
 
 const common = {
   output: {
+    clean: true,
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     hashFunction: 'xxhash64'
