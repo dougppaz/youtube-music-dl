@@ -60,7 +60,7 @@ module.exports = [
       new HtmlWebpackPlugin({
         filename: 'popup.html',
         template: './src/popup.ejs',
-        title: 'Youtube Music DL - Popup',
+        title: 'YouTube Music DL - Popup',
         chunks: ['popup']
       })
     ],

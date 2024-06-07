@@ -22,7 +22,7 @@ export default Vue.component(
                 v-bind:value="format.itag">{{ format.codecs }} {{ format.audioBitrate }}K</option>
             </select>
           </p>
-          <p><small>Youtube Video ID <a v-bind:href="ytVideoURL" target="_blank">{{ videoId }}</a></small></p>
+          <p><small>YouTube Video ID <a v-bind:href="ytVideoURL" target="_blank">{{ videoId }}</a></small></p>
         </div>
       </div>
     `,

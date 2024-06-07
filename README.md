@@ -1,12 +1,10 @@
-# Youtube Music DL
+# YouTube Music DL
 
 ![Continuous Integration](https://github.com/dougppaz/youtube-music-dl/workflows/Continuous%20Integration/badge.svg) ![Continuous Deploy](https://github.com/dougppaz/youtube-music-dl/workflows/Continuous%20Deploy/badge.svg)
 
-Youtube Music Downloader. Chrome Extension to download music file with tags and cover from [Youtube Music](https://music.youtube.com).
+YouTube Music Downloader. Chrome Extension to download music file with tags and cover from [YouTube Music](https://music.youtube.com/).
 
-# Usage
-
-## Download and Install Chrome Extension
+## Download & Install Chrome Extension
 
 1. Download latest release [here](https://github.com/dougppaz/youtube-music-dl/releases/latest/download/youtube-music-dl.zip).
 1. Extract files to directory of your taste.
@@ -15,19 +13,19 @@ Youtube Music Downloader. Chrome Extension to download music file with tags and 
 1. Click on the "Load unpacked extension..." button.
 1. Select the directory containing extracted files.
 
-## Use Youtube Music DL Extension
+## Use YouTube Music DL Extension
 
-### Play a music in [Youtube Music](https://music.youtube.com)
+### Play a music in [YouTube Music](https://music.youtube.com/)
 
-![Play a music in Youtube Music](docs/images/use_ce_1.png)
+![Play a music in YouTube Music](docs/images/use_ce_1.png)
 
 ### Click on Download button
 
 ![Click on Download button](docs/images/use_ce_2_1.png)
 
-#### or open Youtube Music DL Extension popup, to choose a format
+#### or open YouTube Music DL Extension popup, to choose a format
 
-![Open Youtube Music DL Extension popup, to choose a format](docs/images/use_ce_2_2.png)
+![Open YouTube Music DL Extension popup, to choose a format](docs/images/use_ce_2_2.png)
 
 ### Done
 
