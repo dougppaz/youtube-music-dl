@@ -4,9 +4,9 @@
   "description": "YouTube Music DL - YouTube Music Downloader. Download music file with tags and cover.",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "npm run clean-dist && webpack --mode production",
+    "build": "bun run clean-dist && bunx webpack --mode production",
     "clean-dist": "rimraf dist/* dist/**/*",
-    "build-watch": "webpack --watch --mode development",
+    "build-watch": "bunx webpack --watch --mode development",
     "lint": "eslint src/*.js src/**/*.js",
     "test": "mocha \"./src/**/*_test.js\" --require @babel/register"
   },
@@ -20,11 +20,24 @@
     "download"
   ],
   "author": "Douglas Paz <oi@douglaspaz.com>",
+  "contributors": [
+    {
+      "name": "Mountain/\\Ash",
+      "github": "@mountainash"
+    },
+    {
+      "name": "Mountain/\\Ash"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dougppaz/youtube-music-dl/issues"
   },
   "homepage": "https://github.com/dougppaz/youtube-music-dl#readme",
+  "packageManager": "bun@1.1.12",
+  "engines": {
+    "bun": ">1.1.12"
+  },
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/plugin-transform-runtime": "^7.15.0",
