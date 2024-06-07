@@ -1,7 +1,11 @@
-const path = require('path')
-const webpack = require('webpack')
-const CopyPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+import path from 'path'
+import webpack from 'webpack'
+import CopyPlugin from 'copy-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const common = {
   output: {
@@ -11,7 +15,7 @@ const common = {
   }
 }
 
-module.exports = [
+const config = [
   {
     target: 'webworker',
     entry: {
@@ -19,14 +23,15 @@ module.exports = [
     },
     resolve: {
       fallback: {
-        url: require.resolve('url/'),
-        timers: require.resolve('timers-browserify'),
-        stream: require.resolve('stream-browserify'),
-        https: require.resolve('https-browserify'),
-        http: require.resolve('stream-http'),
-        path: require.resolve('path-browserify'),
-        util: require.resolve('util/'),
-        vm: require.resolve('vm-browserify')
+        http: path.join(__dirname, 'node_modules/stream-http/index.js'),
+        https: path.join(__dirname, 'node_modules/https-browserify/index.js'),
+        path: path.join(__dirname, 'node_modules/path-browserify/index.js'),
+        stream: path.join(__dirname, 'node_modules/stream-browserify/index.js'),
+        timers: path.join(__dirname, 'node_modules/timers-browserify/main.js'),
+        querystring: path.join(__dirname, 'node_modules/querystring-es3/index.js'),
+        url: path.join(__dirname, 'node_modules/url/url.js'),
+        util: path.join(__dirname, 'node_modules/util/util.js'),
+        vm: path.join(__dirname, 'node_modules/vm-browserify/index.js')
       }
     },
     plugins: [
@@ -38,6 +43,17 @@ module.exports = [
         patterns: [
           'manifest.json'
         ]
+      }),
+      new webpack.NormalModuleReplacementPlugin(/node:/, (resource) => {
+        const mod = resource.request.replace(/^node:/, '')
+
+        switch (mod) {
+          case 'path':
+            resource.request = 'path-browserify'
+            break
+          default:
+            throw new Error(`Not found ${mod}`)
+        }
       })
     ],
     performance: {
@@ -82,3 +98,5 @@ module.exports = [
     ...common
   }
 ]
+
+export default config
