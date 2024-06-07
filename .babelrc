@@ -4,8 +4,10 @@
       "@babel/preset-env",
       {
         "targets": {
-          "chrome": "125"
-        }
+          "chrome": "125",
+          "esmodules": true
+        },
+        "sourceMaps": true
       }
     ]
   ],

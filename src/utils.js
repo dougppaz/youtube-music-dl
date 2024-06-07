@@ -72,7 +72,7 @@ export default {
         if (COUNTERPART_PROPERTY in wrapper) {
           for (const renderer of wrapper[COUNTERPART_PROPERTY]) {
             if (COUNTERPART_RENDERER_PROPERTY in renderer &&
-                RENDERER_PROPERTY in renderer[COUNTERPART_RENDERER_PROPERTY]) {
+              RENDERER_PROPERTY in renderer[COUNTERPART_RENDERER_PROPERTY]) {
               items.push(renderer[COUNTERPART_RENDERER_PROPERTY])
             }
           }

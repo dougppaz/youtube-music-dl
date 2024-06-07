@@ -64,7 +64,7 @@ const config = [
     ...common
   },
   {
-    target: 'web',
+    target: ['browserslist:modern', 'es5'],
     entry: {
       popup: './src/popup.js'
     },
@@ -84,7 +84,7 @@ const config = [
     ...common
   },
   {
-    target: 'web',
+    target: ['browserslist:modern', 'es5'],
     entry: {
       content: './src/content.js'
     },
