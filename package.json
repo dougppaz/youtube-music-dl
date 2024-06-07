@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "type": "module",
   "scripts": {
-    "build": "bunx webpack-cli --mode production",
+    "build": "bun run clean-dist && bunx webpack-cli --mode production",
+    "clean-dist": "bunx rm -rf dist",
     "build-watch": "bunx webpack --watch --mode development",
     "lint": "eslint src/*.js src/**/*.js",
     "test": "mocha \"./src/**/*_test.js\" --require @babel/register"
