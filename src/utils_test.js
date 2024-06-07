@@ -1,9 +1,11 @@
 import assert from 'assert'
-import utils from './utils'
-import YTMusicAppStateMock1 from './test_mocks/ytmusic-app-state-1.json'
-import YTMusicAppStateMock2 from './test_mocks/ytmusic-app-state-2.json'
-import YTMusicAppStateMock3 from './test_mocks/ytmusic-app-state-3.json'
-import YTMusicAppStateMock4 from './test_mocks/ytmusic-app-state-4.json'
+import utils from './utils.js'
+
+// Eslint error with no ignore: https://github.com/eslint/eslint/discussions/15305
+import YTMusicAppStateMock1 from './test_mocks/ytmusic-app-state-1.json' with { type: "json" }
+import YTMusicAppStateMock2 from './test_mocks/ytmusic-app-state-2.json' with { type: "json" }
+import YTMusicAppStateMock3 from './test_mocks/ytmusic-app-state-3.json' with { type: "json" }
+import YTMusicAppStateMock4 from './test_mocks/ytmusic-app-state-4.json' with { type: "json" }
 
 describe('utils', () => {
   describe('#getMusicTagsFromYTMusicAppState()', () => {
