@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Youtube Music DL",
+  "name": "YouTube Music DL",
   "version": "1.1",
-  "description": "Youtube Music Downloader. Download music file with tags and cover.",
+  "description": "YouTube Music Downloader. Download music file with tags and cover.",
   "permissions": [
     "background",
     "declarativeContent",
@@ -22,7 +22,7 @@
     "persistent": true
   },
   "page_action": {
-    "default_title": "Download Current Music - Youtube Music DL",
+    "default_title": "Download Current Music - YouTube Music DL",
     "default_popup": "popup.html"
   },
   "content_scripts": [
