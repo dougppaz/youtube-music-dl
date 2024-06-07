@@ -2,7 +2,7 @@
 
 ![Continuous Integration](https://github.com/dougppaz/youtube-music-dl/workflows/Continuous%20Integration/badge.svg) ![Continuous Deploy](https://github.com/dougppaz/youtube-music-dl/workflows/Continuous%20Deploy/badge.svg)
 
-YouTube Music Downloader. Chrome Extension to download music file with tags and cover from [YouTube Music](https://music.YouTube.com).
+YouTube Music Downloader. Chrome Extension to download music file with tags and cover from [YouTube Music](https://music.youtube.com/).
 
 ## Download & Install Chrome Extension
 
