@@ -1,6 +1,6 @@
-import JDataView from 'jDataView'
 import atob from 'atob'
 import btoa from 'btoa'
+import JDataView from 'jdataview'
 import Atom from './atom.js'
 import {
   recursiveParse,
