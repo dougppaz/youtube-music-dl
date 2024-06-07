@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import HasVideoInfo from './has-video-info'
-import MusicInfo from './music-info'
+import HasVideoInfo from './has-video-info.js'
+import MusicInfo from './music-info.js'
 
 export default Vue.component(
   'MusicDownload',

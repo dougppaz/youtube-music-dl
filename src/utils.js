@@ -5,7 +5,7 @@ import { get } from 'lodash'
 import axios from 'axios'
 import { Buffer } from 'buffer'
 import filenamify from 'filenamify'
-import MP4 from './mp4'
+import MP4 from './mp4/index.js'
 
 const DEFAULT_ITAG = 140
 const RENDERER_PROPERTY = 'playlistPanelVideoRenderer'

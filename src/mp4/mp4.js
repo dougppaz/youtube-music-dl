@@ -1,7 +1,7 @@
 import JDataView from 'jDataView'
 import atob from 'atob'
 import btoa from 'btoa'
-import Atom from './atom'
+import Atom from './atom.js'
 import {
   recursiveParse,
   recursiveBuilder,
@@ -9,7 +9,7 @@ import {
   concatBuffers,
   getDataAtom,
   ascii
-} from './utils'
+} from './utils.js'
 
 const BASE64_MARKER = ';base64,'
 const CHUNK_SIZE = 0x8000

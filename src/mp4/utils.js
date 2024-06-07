@@ -1,5 +1,5 @@
 import JDataView from 'jDataView'
-import Atom from './atom'
+import Atom from './atom.js'
 
 const recursiveParse = (atom, dataArg) => {
   let data = dataArg
