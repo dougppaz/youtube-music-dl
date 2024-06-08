@@ -85,7 +85,8 @@ export default {
     const firstItem = selectedItem[0].playlistPanelVideoRenderer
 
     const yearSting = firstItem.longBylineText.runs.at(-1).text
-    const year = yearSting ? yearSting.match(/\d{4}/)[0] : null
+    const yearSearch = yearSting.match(/\d{4}/)
+    const year = yearSearch ? yearSearch[0] : null
 
     const coverUrlsNoWebP = firstItem.thumbnail.thumbnails.filter((thumb) => {
       return !thumb.url.includes('.webp')
