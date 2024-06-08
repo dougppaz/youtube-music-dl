@@ -1,5 +1,3 @@
-import atob from 'atob'
-import btoa from 'btoa'
 import JDataView from 'jdataview'
 import Atom from './atom.js'
 import {
@@ -89,7 +87,7 @@ export default class MP4 {
       artist: getDataAtom(metadata, '\xA9ART').getString(),
       album: getDataAtom(metadata, '\xA9alb').getString(),
       genre: getDataAtom(metadata, '\xA9gen').getString(),
-      cover: null
+      cover: ''
     }
     const cover = getDataAtom(metadata, 'covr')
 
@@ -106,7 +104,7 @@ export default class MP4 {
         index += CHUNK_SIZE
       }
 
-      tags.cover = 'data:image/jpeg;base64,' + btoa(result)
+      tags.cover = btoa(result)
     }
 
     return tags
