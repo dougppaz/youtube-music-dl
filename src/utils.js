@@ -84,6 +84,8 @@ export default {
 
     const firstItem = selectedItem[0].playlistPanelVideoRenderer
 
+    const yearSting = firstItem.longBylineText.runs.at(-1).text
+    const year = yearSting ? yearSting.match(/\d{4}/)[0] : null
     return {
       title: firstItem.title.runs
         .map(({ text }) => (text))
@@ -98,8 +100,8 @@ export default {
         .join(' - '),
       track: null,
       genre: null,
-      year: parseInt(firstItem.longBylineText.runs[firstItem.longBylineText.runs.length - 1].text),
       coverUrl: firstItem.thumbnail.thumbnails.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
+      year: parseInt(year) || null,
     }
   },
   async imageBlobToBase64 (blob) {
