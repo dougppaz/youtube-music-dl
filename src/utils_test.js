@@ -55,15 +55,16 @@ describe('utils', () => {
     })
 
     it('Mock 4', () => {
+      // Tested on https://music.youtube.com/watch?v=_7SqQa_6ywA&list=RDCLAK5uy_mb6USApIgQTkWJBW1MhquqHg_zlq4kdjk&index=0
       assert.deepStrictEqual(
         utils.getMusicTagsFromYTMusicAppState(YTMusicAppStateMock4),
         {
           title: 'Deu Onda',
-          artist: 'MC G15',
+          artist: 'Mc G15 & DJ Jorgin',
           album: 'Deu Onda',
           track: null,
           genre: null,
-          year: 2016,
+          year: 2020,
           coverUrl: 'https://lh3.googleusercontent.com/g-tqJh366RWPSW0CX4p5VrLY1d5koWmP1lpNEroWVMf-vSMdcDW1RhV1I2MypxjGZ0y5D9Y-V7RC525FyQ=w544-h544-l90-rj'
         }
       )
