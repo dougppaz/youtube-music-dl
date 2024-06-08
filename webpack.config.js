@@ -36,7 +36,8 @@ module.exports = [
       }),
       new CopyPlugin({
         patterns: [
-          'manifest.json'
+          'manifest.json',
+          'src/imgs/icon128.png'
         ]
       })
     ],

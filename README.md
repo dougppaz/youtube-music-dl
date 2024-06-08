@@ -33,4 +33,5 @@ YouTube Music Downloader. Chrome Extension to download music file with tags and 
 
 ## Thanks to
 
-- Icons made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) from [www.flaticon.com](https://www.flaticon.com/)
+- Extension Icon from [css.gg](https://css.gg/music-speaker)
+- Download Icon made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) from [www.flaticon.com](https://www.flaticon.com/)
