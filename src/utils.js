@@ -86,6 +86,11 @@ export default {
 
     const yearSting = firstItem.longBylineText.runs.at(-1).text
     const year = yearSting ? yearSting.match(/\d{4}/)[0] : null
+
+    const coverUrlsNoWebP = firstItem.thumbnail.thumbnails.filter((thumb) => {
+      return !thumb.url.includes('.webp')
+    })
+
     return {
       title: firstItem.title.runs
         .map(({ text }) => (text))
@@ -100,8 +105,8 @@ export default {
         .join(' - '),
       track: null,
       genre: null,
-      coverUrl: firstItem.thumbnail.thumbnails.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
       year: parseInt(year) || null,
+      coverUrl: coverUrlLargest || null
     }
   },
   async imageBlobToBase64 (blob) {
