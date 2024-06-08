@@ -53,6 +53,9 @@
       padding: .5em;
       font-weight: bold;
     }
+    .error {
+      color: red;
+    }
   </style>
 </head>
 
@@ -63,8 +66,8 @@
       <music-download v-bind:video-id="videoId" />
     </div>
     <div v-else>
-      <h2>Source not found! :(</h2>
-      <p>Play a music in YouTube Music app.</p>
+      <p><strong class="error">Source not found!</strong></p>
+      <p>▶️ Ensure a track is playing in YouTube Music app or refresh the page and try again.</p>
     </div>
   </div>
 </body>
