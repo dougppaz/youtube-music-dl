@@ -8,9 +8,9 @@ YouTube Music Downloader. Chrome Extension to download music file with tags and 
 
 1. Download latest release [here](https://github.com/dougppaz/youtube-music-dl/releases/latest/download/youtube-music-dl.zip).
 1. Extract files to directory of your taste.
-1. Visit `chrome://extensions` (via omnibox or menu -> Tools -> Extensions).
-1. Enable Developer mode by ticking the checkbox in the upper-right corner.
-1. Click on the "Load unpacked extension..." button.
+1. Visit `chrome://extensions` (via omnibox or menu -> Window -> Extensions).
+1. Enable Developer mode by ticking the toggle in the upper-right corner.
+1. Click on the "Load unpacked ..." button.
 1. Select the directory containing extracted files.
 
 ## Use YouTube Music DL Extension
