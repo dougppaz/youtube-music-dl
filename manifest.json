@@ -28,7 +28,7 @@
   "content_scripts": [
     {
       "matches": [
-        "*://music.youtube.com/*"
+        "https://music.youtube.com/*"
       ],
       "js": [
         "content.js"
