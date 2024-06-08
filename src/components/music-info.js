@@ -7,12 +7,22 @@ export default Vue.component(
     extends: HasVideoInfo,
     template: `
       <div>
-        <div v-if="musicTags">
-          <p>{{ musicTags.title }}</p>
-          <p>by <strong>{{ musicTags.artist }}</strong></p>
+        <div v-if="musicTags" class="info">
+          <img v-bind:src="musicTags.coverUrl" />
+          <dl>
+            <dd>{{ musicTags.title }}</dd>
+            <dd>{{ musicTags.artist }}</dd>
+            <dd>{{ musicTags.album }}</dd>
+            <dt v-if="musicTags.track" class="minor">Track</dt>
+            <dd v-if="musicTags.track" class="minor">{{ musicTags.track }}</dd>
+            <dt v-if="musicTags.genre" class="minor">Genre</dt>
+            <dd v-if="musicTags.genre" class="minor">{{ musicTags.genre }}</dd>
+            <dt v-if="musicTags.year" class="minor">Year</dt>
+            <dd v-if="musicTags.year" class="minor">{{ musicTags.year }}</dd>
+          </dl>
         </div>
         <div v-else>
-          <p>Loading music info...</p>
+          <p><i>Loading music info&hellip;</i></p>
         </div>
       </div>
     `,

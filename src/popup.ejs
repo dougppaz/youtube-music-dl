@@ -4,9 +4,54 @@
 <head>
   <meta charset="utf-8">
   <title><%= htmlWebpackPlugin.options.title %></title>
-  <style type="text/css">
+  <meta name="color-scheme" content="dark">
+  <style>
     body {
+      background: #000;
+      color: #fff;
       min-width: 400px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.5em;
+    }
+    img {
+      max-width: 5em;
+      max-height: 5em;
+      border: 1px solid #999;
+    }
+    form,
+    .info {
+      display: flex;
+      gap: 1em;
+      margin: 1em 0;
+    }
+    dl,
+    dd {
+      margin: 0;
+    }
+    dt.minor {
+      clear: left;
+      font-weight: bold;
+      &::after {
+        content: ':';
+      }
+    }
+    dd.minor {
+      margin: 0 .5em;
+    }
+    .minor {
+      float: left;
+      font-size: .8em;
+      opacity: .8;
+    }
+    select {
+      padding: .5em;
+      font-family: monospace;
+    }
+    button {
+      padding: .5em;
+      font-weight: bold;
     }
   </style>
 </head>
