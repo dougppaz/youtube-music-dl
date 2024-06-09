@@ -19,7 +19,8 @@ describe('utils', () => {
           track: null,
           genre: null,
           year: 2019,
-          coverUrl: 'https://lh3.googleusercontent.com/F0TqhiZZ0_TwnbtXKbmhPkiMKx3S9ryXPzlcB2w9ojM-kCB9PEublvq3E8OB5bFbcdDJQpjYwAvVSIy45Q=w544-h544-l90-rj'
+          coverUrl: 'https://lh3.googleusercontent.com/F0TqhiZZ0_TwnbtXKbmhPkiMKx3S9ryXPzlcB2w9ojM-kCB9PEublvq3E8OB5bFbcdDJQpjYwAvVSIy45Q=w544-h544-l90-rj',
+          explicit: false
         }
       )
     })
@@ -34,7 +35,8 @@ describe('utils', () => {
           track: null,
           genre: null,
           year: 2019,
-          coverUrl: 'https://lh3.googleusercontent.com/qntNlGkVK1An5SR5nAw6ASXeyBu3JvuSVEPBML6rRrRgKjPNdQEGSMdNy5jbKJSrgjumS5R9hU0fWPsR=w544-h544-l90-rj'
+          coverUrl: 'https://lh3.googleusercontent.com/qntNlGkVK1An5SR5nAw6ASXeyBu3JvuSVEPBML6rRrRgKjPNdQEGSMdNy5jbKJSrgjumS5R9hU0fWPsR=w544-h544-l90-rj',
+          explicit: false
         }
       )
     })
@@ -49,7 +51,8 @@ describe('utils', () => {
           track: null,
           genre: null,
           year: 2019,
-          coverUrl: 'https://lh3.googleusercontent.com/tq3tDp8XrcBVz0pqsZ_AI_QYZlYdPN9jm7ZV_NbvNNPapyQjunJ5PvJQ-oDAr52fL9sHIphZbN3rFEH6=w544-h544-l90-rj'
+          coverUrl: 'https://lh3.googleusercontent.com/tq3tDp8XrcBVz0pqsZ_AI_QYZlYdPN9jm7ZV_NbvNNPapyQjunJ5PvJQ-oDAr52fL9sHIphZbN3rFEH6=w544-h544-l90-rj',
+          explicit: false
         }
       )
     })
@@ -65,7 +68,8 @@ describe('utils', () => {
           track: null,
           genre: null,
           year: 2020,
-          coverUrl: 'https://lh3.googleusercontent.com/lw0wqcYtG1xyQWzZ3D_2-WCjf1JENxlkJv4Nod6wjAaibvGb9dr6oGcOeZsV7Wf_PlzYj7iwauqKjXnI=w544-h544-l90-rj'
+          coverUrl: 'https://lh3.googleusercontent.com/lw0wqcYtG1xyQWzZ3D_2-WCjf1JENxlkJv4Nod6wjAaibvGb9dr6oGcOeZsV7Wf_PlzYj7iwauqKjXnI=w544-h544-l90-rj',
+          explicit: true
         }
       )
     })

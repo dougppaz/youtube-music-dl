@@ -10,7 +10,10 @@ export default Vue.component(
         <div v-if="musicTags" class="info">
           <img v-bind:src="musicTags.coverUrl" />
           <dl>
-            <dd>{{ musicTags.title }}</dd>
+            <dd>
+              {{ musicTags.title }}
+              <span v-if="musicTags.explicit">[E]</span>
+            </dd>
             <dd>{{ musicTags.artist }}</dd>
             <dd>{{ musicTags.album }}</dd>
             <dt v-if="musicTags.track" class="minor">Track</dt>

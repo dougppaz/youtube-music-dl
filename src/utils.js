@@ -68,7 +68,6 @@ export default {
       } else if (WRAPPER_PROPERTY in item) {
         const wrapper = item[WRAPPER_PROPERTY]
 
-        if (COUNTERPART_PROPERTY in wrapper) {
         if (PRIMARY_PROPERTY in wrapper) {
           items.push(wrapper[PRIMARY_PROPERTY])
         } else if (COUNTERPART_PROPERTY in wrapper) {
@@ -99,6 +98,9 @@ export default {
     })
     const coverUrlLargest = coverUrlsNoWebP.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
 
+    // EXPLICIT MUSIC
+    const explicitBadge = firstItem.badges && firstItem.badges.some(({ musicInlineBadgeRenderer }) => musicInlineBadgeRenderer.icon.iconType === 'MUSIC_EXPLICIT_BADGE')
+
     return {
       title: firstItem.title.runs
         .map(({ text }) => (text))
@@ -114,7 +116,8 @@ export default {
       track: null, // resevered for Track Number (in Album)
       genre: null,
       year: parseInt(year) || null,
-      coverUrl: coverUrlLargest || null
+      coverUrl: coverUrlLargest || null,
+      explicit: explicitBadge || false
     }
   },
   async imageBlobToBase64 (blob) {
