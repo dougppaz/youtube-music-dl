@@ -1,5 +1,5 @@
 import { get, set } from 'lodash-es'
-import utils from './utils'
+import utils from './utils.js'
 
 const videoIds = {}
 const videoInfos = {}

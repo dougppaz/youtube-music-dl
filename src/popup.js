@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import MusicDownload from './components/music-download'
-import VideoInfos from './plugins/video-infos'
+import MusicDownload from './components/music-download.js'
+import VideoInfos from './plugins/video-infos.js'
 
 (() => {
   const background = chrome.extension.getBackgroundPage()

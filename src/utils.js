@@ -1,11 +1,9 @@
 import YTDL from 'ytdl-core'
 import BlobStream from 'blob-stream'
 import mime from 'mime-types'
-import { get } from 'lodash'
-import axios from 'axios'
-import { Buffer } from 'buffer'
+import { get } from 'lodash-es'
 import filenamify from 'filenamify'
-import MP4 from './mp4'
+import MP4 from './mp4/index.js'
 
 const DEFAULT_ITAG = 140
 const RENDERER_PROPERTY = 'playlistPanelVideoRenderer'
@@ -72,7 +70,7 @@ export default {
         if (COUNTERPART_PROPERTY in wrapper) {
           for (const renderer of wrapper[COUNTERPART_PROPERTY]) {
             if (COUNTERPART_RENDERER_PROPERTY in renderer &&
-                RENDERER_PROPERTY in renderer[COUNTERPART_RENDERER_PROPERTY]) {
+              RENDERER_PROPERTY in renderer[COUNTERPART_RENDERER_PROPERTY]) {
               items.push(renderer[COUNTERPART_RENDERER_PROPERTY])
             }
           }
@@ -104,12 +102,23 @@ export default {
       coverUrl: firstItem.thumbnail.thumbnails.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
     }
   },
-  async getCoverBase64FromUrl (url) {
-    const response = await axios({
-      url,
-      responseType: 'arraybuffer'
+  async imageBlobToBase64 (blob) {
+    return new Promise(function (resolve, reject) {
+      try {
+        const reader = new FileReader()
+        reader.onload = function () {
+          resolve(this.result)
+        }
+        reader.readAsDataURL(blob)
+      } catch (e) {
+        reject(e)
+      }
     })
-    const b64 = Buffer.from(response.data, 'binary').toString('base64')
-    return `data:${response.headers['content-type'].toLowerCase()};base64,${b64}`
+  },
+  async getCoverBase64FromUrl (url) {
+    const response = await fetch(url)
+    const blob = await response.blob()
+    const b64 = await this.imageBlobToBase64(blob)
+    return b64.toString()
   }
 }

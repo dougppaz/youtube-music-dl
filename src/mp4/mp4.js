@@ -1,18 +1,14 @@
-import JDataView from 'jDataView'
-import atob from 'atob'
-import btoa from 'btoa'
-import Atom from './atom'
+import JDataView from 'jdataview'
+import Atom from './atom.js'
 import {
   recursiveParse,
   recursiveBuilder,
   addDataAtom,
   concatBuffers,
-  getDataAtom,
   ascii
-} from './utils'
+} from './utils.js'
 
 const BASE64_MARKER = ';base64,'
-const CHUNK_SIZE = 0x8000
 
 export default class MP4 {
   constructor (input) {
@@ -80,35 +76,5 @@ export default class MP4 {
     }
 
     return this
-  }
-
-  getCommonTags () {
-    const metadata = this.root.ensureChild('moov.udta.meta.ilst')
-    const tags = {
-      title: getDataAtom(metadata, '\xA9nam').getString(),
-      artist: getDataAtom(metadata, '\xA9ART').getString(),
-      album: getDataAtom(metadata, '\xA9alb').getString(),
-      genre: getDataAtom(metadata, '\xA9gen').getString(),
-      cover: null
-    }
-    const cover = getDataAtom(metadata, 'covr')
-
-    if (cover) {
-      const data = cover.getBytes()
-      const length = data.length
-      let slice
-      let result = ''
-      let index = 0
-
-      while (index < length) {
-        slice = data.subarray(index, Math.min(index + CHUNK_SIZE, length))
-        result += String.fromCharCode.apply(null, slice)
-        index += CHUNK_SIZE
-      }
-
-      tags.cover = 'data:image/jpeg;base64,' + btoa(result)
-    }
-
-    return tags
   }
 }
