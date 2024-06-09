@@ -13,15 +13,15 @@ export default Vue.component(
       <div>
         <music-info v-bind:videoId="videoId" />
         <div>
-          <p><button v-on:click="download">Download</button</p>
-          <p>
+          <form>
             <select v-model="itag">
               <option
                 v-for="format in formats"
                 v-bind:key="format.itag"
                 v-bind:value="format.itag">{{ format.codecs }} {{ format.audioBitrate }}K</option>
             </select>
-          </p>
+            <button v-on:click="download">Download</button>
+          </form>
           <p><small>YouTube Video ID <a v-bind:href="ytVideoURL" target="_blank">{{ videoId }}</a></small></p>
         </div>
       </div>
