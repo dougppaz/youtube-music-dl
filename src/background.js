@@ -66,7 +66,7 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
         console.log('new video id', videoId, 'setted to', sender.tab.id)
         videoIds[sender.tab.id] = videoId
       }
-      set(videoInfos, `${sender.tab.id}.${videoId}.tags`, utils.getMusicTagsFromYTMusicAppState(state))
+      set(videoInfos, `${sender.tab.id}.${videoId}.tags`, utils.getMusicTagsFromYTMusicAppState(state.queue.items))
       chrome.runtime.sendMessage({
         action: 'videoInfosUpdated',
         videoInfos
