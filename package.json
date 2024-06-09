@@ -1,14 +1,15 @@
 {
   "name": "youtube-music-dl",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "YouTube Music DL - YouTube Music Downloader. Download music file with tags and cover.",
   "main": "webpack.config.js",
+  "type": "module",
   "scripts": {
-    "build": "npm run clean-dist && webpack --mode production",
-    "clean-dist": "rimraf dist/* dist/**/*",
-    "build-watch": "webpack --watch --mode development",
+    "build": "bun run clean-dist && bunx webpack-cli --mode production",
+    "clean-dist": "bunx rm -rf dist/*",
+    "build-watch": "bunx webpack --watch --mode development",
     "lint": "eslint src/*.js src/**/*.js",
-    "test": "mocha \"./src/**/*_test.js\" --require @babel/register"
+    "test": "mocha \"./src/**/*_test.js\""
   },
   "repository": {
     "type": "git",
@@ -20,51 +21,63 @@
     "download"
   ],
   "author": "Douglas Paz <oi@douglaspaz.com>",
+  "contributors": [
+    {
+      "name": "Mountain/\\Ash",
+      "github": "@mountainash",
+      "url": "https://mountainash.id.au/"
+    },
+    {
+      "name": "Manuel Thalmann",
+      "email": "m@nuth.ch",
+      "url": "https://nuth.ch/",
+      "github": "@manuth"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/dougppaz/youtube-music-dl/issues"
   },
   "homepage": "https://github.com/dougppaz/youtube-music-dl#readme",
+  "packageManager": "bun@1.1.12",
+  "engines": {
+    "bun": ">1.1.12"
+  },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
-    "@babel/plugin-transform-runtime": "^7.15.0",
-    "@babel/preset-env": "^7.15.6",
-    "@babel/register": "^7.15.3",
-    "babel-loader": "^8.2.2",
-    "copy-webpack-plugin": "^8.1.1",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^14.1.1",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-standard": "^4.1.0",
-    "html-webpack-plugin": "^5.3.2",
-    "mocha": "^9.2.0",
+    "@types/chrome": "^0.0.268",
+    "browserslist": "^4.23.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "eslint": "8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "html-webpack-plugin": "^5.6.0",
+    "mocha": "^10.4.0",
     "raw-loader": "^4.0.2",
-    "rimraf": "^3.0.2",
-    "webpack": "^5.65.0",
-    "webpack-cli": "^4.9.1"
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "atob": "^2.1.2",
-    "axios": "^0.21.4",
     "blob-stream": "^0.1.3",
-    "btoa": "^1.2.1",
-    "buffer": "^5.7.1",
-    "filenamify": "^4.3.0",
+    "buffer": "^6.0.3",
+    "filenamify": "6.0.0",
     "https-browserify": "^1.0.0",
-    "jDataView": "^2.3.0",
+    "jdataview": "^2.5.0",
     "lodash-es": "^4.17.21",
-    "mime-types": "^2.1.32",
+    "mime-types": "^2.1.35",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
+    "querystring-es3": "^0.2.1",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "timers-browserify": "^2.0.12",
-    "url": "^0.11.0",
-    "util": "^0.12.4",
+    "url": "^0.11.3",
+    "util": "^0.12.5",
     "vm-browserify": "^1.1.2",
-    "vue": "^2.6.14",
-    "ytdl-core": "^4.10.0"
+    "vue": "^2.7.16",
+    "ytdl-core": "^4.11.5"
+  },
+  "browserslist": {
+    "modern": [
+      "last 1 chrome version"
+    ]
   }
 }
