@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "YouTube Music DL",
   "version": "1.3.0",
   "description": "YouTube Music Downloader. Download music file with tags and cover.",
@@ -8,23 +8,27 @@
     "declarativeContent",
     "activeTab",
     "tabs",
-    "downloads",
-    "https://music.youtube.com/",
-    "https://www.youtube.com/",
-    "https://*.googlevideo.com/",
-    "https://i.ytimg.com/"
+    "downloads"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "host_permissions": [
+    "https://music.youtube.com/*",
+    "https://www.youtube.com/*",
+    "https://*.googlevideo.com/*",
+    "https://i.ytimg.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["content-script.js"],
+      "matches": ["https://music.youtube.com/*"]
+    }
+  ],
   "icons": {
     "128": "icon128.png"
   },
   "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": true
+    "service_worker": "background.js"
   },
-  "page_action": {
+  "action": {
     "default_title": "Download Current Music - YouTube Music DL",
     "default_popup": "popup.html"
   },

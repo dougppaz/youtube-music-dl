@@ -2,18 +2,23 @@ import path from 'path'
 import webpack from 'webpack'
 import CopyPlugin from 'copy-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import generate from 'generate-file-webpack-plugin'
 import { fileURLToPath } from 'url'
+import buildContentScript from './build-content-script.cjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const common = {
+  devtool: 'source-map',
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     hashFunction: 'xxhash64'
   }
 }
+
+const contentScript = buildContentScript()
 
 const config = [
   {
@@ -88,14 +93,12 @@ const config = [
     entry: {
       content: './src/content.js'
     },
-    module: {
-      rules: [
-        {
-          test: /\.svg$/i,
-          use: 'raw-loader'
-        }
-      ]
-    },
+    plugins: [
+      generate({
+        file: 'content-script.js',
+        content: contentScript.content
+      })
+    ],
     ...common
   }
 ]

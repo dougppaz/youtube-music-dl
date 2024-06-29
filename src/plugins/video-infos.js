@@ -1,11 +1,6 @@
 export default {
-  async install (Vue, { videoInfos, tab }) {
-    const getVideoInfos = videoInfos => (videoInfos[tab.id])
-
-    Vue.prototype.$videoInfos = Vue.observable({
-      current: getVideoInfos(videoInfos),
-      tab
-    })
+  async install (Vue, { videoInfos }) {
+    Vue.prototype.$videoInfos = Vue.observable({ current: videoInfos })
 
     chrome.runtime.onMessage.addListener(async (message) => {
       switch (message.action) {
@@ -14,7 +9,7 @@ export default {
           Vue.set(
             Vue.prototype.$videoInfos,
             'current',
-            getVideoInfos(message.videoInfos)
+            message.videoInfos
           )
           break
 
