@@ -41,23 +41,23 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
   let videoId
   let videoInfo
   switch (message.action) {
-    case 'requestVideoInfo':
+    case 'requestVideoInfo': // called from Vue in the Popup
       console.log('tab', tabId, 'request video info', message.videoId)
       await getVideoInfo(tabId, message.videoId)
       break
-    case 'downloadYTMusic':
+    case 'downloadYTMusic': // called from Vue in the Popup when the Download button is clicked. itag is the audio format/quality setting
       console.log('tab', tabId, 'download video id', message.videoId, 'with itag', message.itag)
       videoInfo = await getVideoInfo(tabId, message.videoId)
       utils.download(videoInfo, message.itag)
       break
-    case 'downloadFromPlayerButton':
+    case 'downloadFromPlayerButton': // called from the Download icon injected into the YouTube Music UI
       state = JSON.parse(message.state)
       videoId = get(state, 'player.playerResponse.videoDetails.videoId')
       console.log('tab', tabId, 'download video id', videoId)
       videoInfo = await getVideoInfo(tabId, videoId)
       utils.download(videoInfo)
       break
-    case 'newYtMusicAppState':
+    case 'newYtMusicAppState': // called on a timer when the YouTube Music UI changes tracks
       state = JSON.parse(message.value)
       videoId = get(state, 'player.playerResponse.videoDetails.videoId')
       if (!videoId) return console.log('new yt music app state without videoId')
@@ -66,7 +66,7 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
         console.log('new video id', videoId, 'setted to', sender.tab.id)
         videoIds[sender.tab.id] = videoId
       }
-      set(videoInfos, `${sender.tab.id}.${videoId}.tags`, utils.getMusicTagsFromYTMusicAppState(state))
+      set(videoInfos, `${sender.tab.id}.${videoId}.tags`, utils.getMusicTagsFromYTMusicAppState(state.queue.items))
       chrome.runtime.sendMessage({
         action: 'videoInfosUpdated',
         videoInfos

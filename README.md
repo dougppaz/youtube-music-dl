@@ -1,17 +1,15 @@
 # YouTube Music DL
 
-![Continuous Integration](https://github.com/dougppaz/youtube-music-dl/workflows/Continuous%20Integration/badge.svg) ![Continuous Deploy](https://github.com/dougppaz/youtube-music-dl/workflows/Continuous%20Deploy/badge.svg)
-
 YouTube Music Downloader. Chrome Extension to download music file with tags and cover from [YouTube Music](https://music.youtube.com/).
 
 ## Download & Install Chrome Extension
 
-1. Download latest release [here](https://github.com/dougppaz/youtube-music-dl/releases/latest/download/youtube-music-dl.zip).
-1. Extract files to directory of your taste.
-1. Visit `chrome://extensions` (via omnibox or menu -> Window -> Extensions).
-1. Enable Developer mode by ticking the toggle in the upper-right corner.
-1. Click on the "Load unpacked ..." button.
-1. Select the directory containing extracted files.
+1. Download latest release `.zip` file in the Releases section [here](./releases/latest/)
+1. Extract files to directory of your choice
+1. Visit `chrome://extensions` (via omnibox or menu -> Window -> Extensions) in your Chromium based browser
+1. Enable Developer mode by ticking the toggle in the upper-right corner
+1. Click on the "Load unpacked ..." button
+1. Select the directory containing extracted files from this project
 
 ## Use YouTube Music DL Extension
 

@@ -8,6 +8,7 @@ import MP4 from './mp4/index.js'
 const DEFAULT_ITAG = 140
 const RENDERER_PROPERTY = 'playlistPanelVideoRenderer'
 const WRAPPER_PROPERTY = 'playlistPanelVideoWrapperRenderer'
+const PRIMARY_PROPERTY = 'primaryRenderer'
 const COUNTERPART_PROPERTY = 'counterpart'
 const COUNTERPART_RENDERER_PROPERTY = 'counterpartRenderer'
 
@@ -34,14 +35,14 @@ export default {
       )
       chrome.downloads.download({
         url: URL.createObjectURL(blob),
-        filename: `${filenamify(ytVideoInfo.videoDetails.title)}.${mime.extension(format.mimeType)}`
+        filename: `${filenamify(ytVideoInfo.videoDetails.title)}.${mime.extension(format.mimeType) || 'mp4'}`
       })
     })
   },
   async setBlobTags (blob, mimeType, tags) {
     let fileBuffer
     let mp4File
-    if (tags.coverUrl && !tags.cover) {
+    if (tags && tags.coverUrl && !tags.cover) {
       tags.cover = await this.getCoverBase64FromUrl(tags.coverUrl)
     }
     switch (mimeType) {
@@ -58,19 +59,20 @@ export default {
   getFilterFnByPageType (pageType) {
     return item => (pageType === get(item, 'navigationEndpoint.browseEndpoint.browseEndpointContextSupportedConfigs.browseEndpointContextMusicConfig.pageType'))
   },
-  getMusicTagsFromYTMusicAppState (state) {
+  getMusicTagsFromYTMusicAppState (queueitems) {
     const items = []
 
-    for (const item of state.queue.items) {
+    for (const item of queueitems) {
       if (RENDERER_PROPERTY in item) {
         items.push(item)
       } else if (WRAPPER_PROPERTY in item) {
         const wrapper = item[WRAPPER_PROPERTY]
 
-        if (COUNTERPART_PROPERTY in wrapper) {
+        if (PRIMARY_PROPERTY in wrapper) {
+          items.push(wrapper[PRIMARY_PROPERTY])
+        } else if (COUNTERPART_PROPERTY in wrapper) {
           for (const renderer of wrapper[COUNTERPART_PROPERTY]) {
-            if (COUNTERPART_RENDERER_PROPERTY in renderer &&
-              RENDERER_PROPERTY in renderer[COUNTERPART_RENDERER_PROPERTY]) {
+            if (COUNTERPART_RENDERER_PROPERTY in renderer && RENDERER_PROPERTY in renderer[COUNTERPART_RENDERER_PROPERTY]) {
               items.push(renderer[COUNTERPART_RENDERER_PROPERTY])
             }
           }
@@ -78,11 +80,23 @@ export default {
       }
     }
 
+    // get the first selected item in the queue
     const selectedItem = items.filter(({ [RENDERER_PROPERTY]: { selected } }) => (selected))
 
     if (selectedItem.length === 0) return null
 
-    const firstItem = selectedItem[0].playlistPanelVideoRenderer
+    const firstItem = selectedItem[0][RENDERER_PROPERTY]
+
+    // YEAR
+    const yearSting = firstItem.longBylineText.runs.at(-1).text
+    const yearSearch = yearSting.match(/\d{4}/)
+    const year = yearSearch ? yearSearch[0] : null
+
+    // COVER ART
+    const coverUrlsNoWebP = firstItem.thumbnail.thumbnails.filter((thumb) => {
+      return !thumb.url.includes('.webp')
+    })
+    const coverUrlLargest = coverUrlsNoWebP.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
 
     return {
       title: firstItem.title.runs
@@ -96,10 +110,10 @@ export default {
         .filter(this.getFilterFnByPageType('MUSIC_PAGE_TYPE_ALBUM'))
         .map(({ text }) => (text))
         .join(' - '),
-      track: null,
+      track: null, // resevered for Track Number (in Album)
       genre: null,
-      year: parseInt(firstItem.longBylineText.runs[firstItem.longBylineText.runs.length - 1].text),
-      coverUrl: firstItem.thumbnail.thumbnails.sort(({ width: widthA }, { width: widthB }) => (widthB - widthA))[0].url
+      year: parseInt(year) || null,
+      coverUrl: coverUrlLargest || null
     }
   },
   async imageBlobToBase64 (blob) {
